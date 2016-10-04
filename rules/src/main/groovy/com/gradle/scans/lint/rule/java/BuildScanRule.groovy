@@ -10,12 +10,16 @@ class BuildScanRule extends GradleLintRule {
     @Override
     void visitApplyPlugin(MethodCallExpression call, String plugin) {
         bookmark(plugin, call)
+        bookmark('lastApplyPlugin', call)
     }
 
     @Override
     protected void visitClassComplete(ClassNode node) {
         if (!bookmark('com.gradle.build-scan')) {
-            addBuildLintViolation("""build-scan plugin is not applied. Go to: https://scans.gradle.com/get-started""")
+            def violation = addBuildLintViolation("""build-scan plugin is not applied. Go to: https://scans.gradle.com/get-started""")
+            if(bookmark('lastApplyPlugin'))
+                violation.insertAfter(lastApplyPlugin, "apply plugin: 'build-scan'")
+            else violation.insertAfter(buildFile, 0, "apply plugin: 'build-scan'")
         }
     }
 }
