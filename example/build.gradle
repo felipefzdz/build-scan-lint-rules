@@ -1,0 +1,20 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2" }
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.gradle.scans.lint:rules:1.0'
+        classpath "com.netflix.nebula:gradle-lint-plugin:5.1.2"
+        classpath "com.gradle:build-scan-plugin:1.0"
+    }
+    configurations.classpath.resolutionStrategy.cacheDynamicVersionsFor 0, 'minutes'
+}
+
+apply plugin: "java"
+apply plugin: "nebula.lint"
+//apply plugin: "com.gradle.build-scan"
+
+gradleLint.rules = ['build-scan']
+
