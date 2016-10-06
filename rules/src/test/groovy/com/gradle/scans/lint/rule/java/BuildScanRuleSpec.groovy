@@ -5,6 +5,17 @@ import spock.lang.Unroll
 
 class BuildScanRuleSpec extends AbstractRuleSpec {
 
+    // 'only (old-style) adding plugin #plugin #violationText build-scan rule'
+    // 'only (new-style) adding plugin #plugin #violationText build-scan rule'
+    // 'build-scan plugin should be added to new style block when both blocks are present'
+    // 'build-scan plugin should be added to new style block when no block is present and gradle version is 2.1+'
+    // 'build-scan plugin should be added to old style block when no block is present and gradle version is 2.0'
+    // 'empty buildscript should be added when adding old style plugins'
+    // 'buildscript without the required dependency should be updated'
+    // 'buildscript with the required dependency should be untouched'
+    // What to do with repositories section? Probably nothing, as we can't really infer if they're using a mirror
+    // 'commented build scan section should be added.'
+
     @Unroll
     def 'only adding plugin #plugin #violationText build-scan rule'() {
         setup:
